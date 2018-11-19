@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/aboutsielo.png</file>
+        <file>images/ic_sielo.png</file>
+    </qresource>
+</RCC>
