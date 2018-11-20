@@ -21,9 +21,9 @@ file(
 )
 
 file(
-        GLOB_RECURSE
-        QRC_FILES
-		*.qrc
+	GLOB_RECURSE
+	QRC_FILES
+	*.qrc
 )
 
 find_package(Qt5Widgets 5.11.2 REQUIRED)

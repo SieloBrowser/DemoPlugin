@@ -46,7 +46,7 @@ namespace Sn
 {
 DemoPlugin::DemoPlugin()
 {
-	// Empty
+	// Empy
 }
 
 PluginProp DemoPlugin::pluginProp()
@@ -56,6 +56,7 @@ PluginProp DemoPlugin::pluginProp()
 	props.name = "Demo Plugin";
 	props.info = "Demo of minimal plugin";
 	props.desc = "Very simple minimal plugin example";
+	props.icon = QPixmap(":images/ic_sielo.png");
 	props.version = "1.0.0";
 	props.author = "Victor DENIS <victordenis01@gmail.com";
 	props.hasSettings = true;
@@ -66,23 +67,29 @@ PluginProp DemoPlugin::pluginProp()
 void DemoPlugin::init(InitState state, const QString& settingsPath)
 {
 	m_settingsPath = settingsPath;
-	m_sideBar = new DemoPluginSideBar(this);
 
+	// Registering this plugin as a MousePressHandler.
+	// Otherwise mousePress() function will never be called.
 	Application::instance()->plugins()->registerAppEventHandler(PluginProxy::MousePressHandler, this);
+
+	// Adding new sidebar into application
+	m_sideBar = new DemoPluginSideBar(this);
 	Application::instance()->addSidebar("demoplugin-sidebar", m_sideBar);
 }
 
 void DemoPlugin::unload()
 {
+	// Removing sidebar from application
 	Application::instance()->removeSidebar(m_sideBar);
-
 	delete m_sideBar;
+	
+	// Deleting settings dialog if opened
 	delete m_settings.data();
 }
 
 bool DemoPlugin::testPlugin()
 {
-	return true;
+	return Application::currentVersion == "1.17.04";
 }
 
 void DemoPlugin::showSettings(QWidget* parent)
@@ -134,6 +141,9 @@ bool DemoPlugin::mousePress(const Application::ObjectName& objName, QObject* obj
 {
 	qDebug() << "DemoPlugin: mousePress" << objName << obj << event;
 
+	/* Returning false means that we don't want to block propagating this event. Returning true
+	 * may affect behaviour of Sielo, so make sure you know what you are doing!
+	 */
 	return false;
 }
 
