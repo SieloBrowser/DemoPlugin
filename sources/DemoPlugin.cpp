@@ -89,7 +89,7 @@ void DemoPlugin::unload()
 
 bool DemoPlugin::testPlugin()
 {
-	return Application::currentVersion == "1.17.04";
+	return Application::currentVersion.contains("1.17");
 }
 
 void DemoPlugin::showSettings(QWidget* parent)
